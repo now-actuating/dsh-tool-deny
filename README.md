@@ -33,6 +33,16 @@ Use `hideByPreset` in a root row, and `hide` and `deny` in a preset row. If a ro
 
 Hidden tools cost no tokens, because their definitions are never sent to the model. Other presets are unaffected. Subagents, automation runs and resumed sessions are covered too.
 
+## Fork: built-in tools by preset table
+
+This fork (`now-actuating/dsh-tool-deny`, `0.1.2+mod.1`) adds a table to the plugin's page in **Plugins**: open **Tool deny** and use **Built-in tools by preset**.
+
+- Columns are the profile's agent presets; rows are the tools DSH ships (`@deepseek-ai/*` packages), each shown with its package.
+- A green dot means the preset sees the tool, red means it is hidden, and `–` means the preset does not have that tool.
+- Clicking a dot asks for confirmation, then edits only `hideByPreset` of the bundle's own `dsh-tool-deny` row through the DSH config editor. The plugin restarts and re-applies the lists to running agents too.
+- The bundle patch now inserts that root row with an empty config, so nothing is hidden until you change the table.
+- A tool's package is read from where its `execute` function was defined (Node inspector, in-process). Third-party and MCP tools are not listed; you can still hide them in YAML.
+
 ## Requirements
 
 | Plugin version | Supported dsh versions |

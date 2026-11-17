@@ -1,15 +1,15 @@
 {
   "name": "dsh-tool-deny",
-  "version": "0.1.2",
+  "version": "0.1.2+mod.1",
   "description": "Hide or refuse named tools per agent preset in DeepSeek Harness. Can also hide system prompts added by tools. Useful when plugins force tools on all agent presets.",
   "license": "MIT",
-  "publishConfig": {
-    "access": "public"
-  },
   "type": "module",
   "main": "index.js",
   "exports": {
     ".": "./index.js",
+    "./client": "./client/client.js",
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.svg",
     "./cordis.patch.yml": "./cordis.patch.yml",
     "./package.json": "./package.json"
   },
@@ -19,6 +19,10 @@
   },
   "files": [
     "index.js",
+    "lib",
+    "client",
+    "locale/*.json",
+    "icon.svg",
     "cordis.patch.yml",
     "README.md",
     "README.zh.md",
@@ -46,6 +50,24 @@
     },
     "engines": {
       "dsh": ">=0.2.1-rc.1 <0.3.0-0"
+    },
+    "versioning": {
+      "kind": "fork",
+      "repository": "https://github.com/now-actuating/dsh-tool-deny.git",
+      "upstreamRepository": "https://github.com/hhuangpanda/dsh-tool-deny.git",
+      "upstreamVersion": "0.1.2",
+      "upstreamCommit": "d172032cdb371d630bbc4250b754526eac50cff0",
+      "revision": 1
+    },
+    "client": {
+      "platform": "web",
+      "inject": [
+        "@deepseek-ai/dsh-client-ui-plugin-manager",
+        "@deepseek-ai/dsh-client-connection",
+        "@deepseek-ai/dsh-client-locale"
+      ]
     }
-  }
+  },
+  "private": true,
+  "icon": "./icon.svg"
 }

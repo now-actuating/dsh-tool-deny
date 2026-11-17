@@ -1,7 +1,11 @@
 /**
  * Limits which tools an agent gets. See README.md for the config options.
  */
+import { manage } from "./lib/management.js"
+
 export const name = "dsh-tool-deny"
+/** Row id inserted by this bundle's patch; the management table edits only this row. */
+export const MANAGED_ROW_ID = "dsh-tool-deny"
 export const inject = ["tools", "systemPrompt"]
 
 function refuseCalls(ctx, toolNames) {
@@ -68,6 +72,8 @@ function hideByPreset(ctx, toolNamesByPreset, sectionNames) {
 }
 
 export function apply(ctx, config = {}) {
+  // Fork addition: only the bundle's own root row serves the management table.
+  if (ctx.fiber?.entry?.options?.id === MANAGED_ROW_ID) manage(ctx, config)
   const sectionNames = config.hideSections ?? []
   if (config.hideByPreset) {
     if (config.hide || config.deny) {
