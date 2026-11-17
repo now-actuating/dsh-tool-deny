@@ -144,10 +144,11 @@ window.__ModuleLoader__.load({
 .dtd-pkg{display:block;font-size:11px;line-height:14px;color:var(--dsw-alias-label-tertiary,#999);}
 .dtd-table td{text-align:center;}
 .dtd-table tbody tr:hover th.dtd-rowhead,.dtd-table tbody tr:hover td{background:var(--dsw-alias-interactive-bg-hover,#f2f2f2);}
-.dtd-dot{width:28px;height:28px;border:none;border-radius:50%;background:transparent;padding:0;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;}
+.dtd-dot{width:28px;height:28px;border:none;border-radius:50%;background:transparent;padding:0;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;vertical-align:middle;}
 .dtd-dot:disabled{cursor:default;opacity:.6;}
-.dtd-dot::after{content:"";width:12px;height:12px;border-radius:50%;background:currentColor;}
-.dtd-dot:hover:not(:disabled)::after{width:14px;height:14px;}
+/* Status dot with halo, after the Tailwind Plus pattern: rounded-full bg-<color>/20 p-1 > size-1.5 rounded-full bg-<color>. */
+.dtd-dot::after{content:"";width:6px;height:6px;border-radius:50%;background:currentColor;box-shadow:0 0 0 4px color-mix(in srgb,currentColor 20%,transparent);transition:box-shadow .12s;}
+.dtd-dot:hover:not(:disabled)::after{box-shadow:0 0 0 4px color-mix(in srgb,currentColor 32%,transparent);}
 .dtd-na{color:var(--dsw-alias-label-tertiary,#999);}
 .dtd-on{color:var(--dsw-alias-state-success-primary,#1e9e5a);}
 .dtd-off{color:var(--dsw-alias-state-error-primary,#d93025);}
