@@ -35,7 +35,7 @@ Hidden tools cost no tokens, because their definitions are never sent to the mod
 
 ## Fork: built-in tools by preset table
 
-This fork (`now-actuating/dsh-tool-deny`, `0.1.2+mod.1`) adds a table to the plugin's page in **Plugins**: open **Tool deny** and use **Built-in tools by preset**.
+This fork (`now-actuating/dsh-tool-deny`, `0.1.2+mod.3`) adds a table to the plugin's page in **Plugins**: open **Tool deny** and use **Built-in tools by preset**.
 
 - Columns are the profile's agent presets; rows are the tools DSH ships (`@deepseek-ai/*` packages), each shown with its package.
 - A green dot with a soft halo means the preset sees the tool, red means it is hidden, and `–` means the preset does not have that tool.
@@ -108,6 +108,10 @@ Use this when a preset should carry its own rules, or when you need `deny`. Add 
 Prefer hiding: the model never sees the tool, and you save its tokens. Use `deny` for tools that hiding can't reach, which are the ones a plugin registers on each agent directly (through `agent.ctx`) instead of globally. If you try to hide one, it stays visible.
 
 ## Hide prompt sections
+
+Hiding a tool through the table, `hideByPreset`, or preset-local `hide` automatically blanks its global `tool:<name>` system prompt section for the same agents (for example, `workflow` also hides `tool:workflow`). Showing it again restores the original section. No extra configuration is needed; tools without such a section add no prompt text. Other presets are unaffected, including when existing agents reload their policy or switch presets. `deny` does not hide instructions.
+
+For sections using other names, keep using `hideSections` alongside automatic hiding. Duplicate names are applied only once. A section explicitly listed in `hideSections` stays hidden while that explicit rule applies, even if its tool is shown again:
 
 Some plugins add a global section to the system prompt. Blank it by name for the same agents:
 

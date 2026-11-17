@@ -25,15 +25,19 @@ function removeFromToolList(ctx, toolName) {
 
 function hide(ctx, logger, toolNames, sectionNames) {
   const undo = []
-  for (const toolName of toolNames) {
+  // Scoped empty sections shadow the global tool instructions without changing
+  // the provider for other agents. Set also handles overlap with hideSections.
+  const hiddenSections = new Set(sectionNames)
+  for (const toolName of new Set(toolNames)) {
     // One call per name: restrict() throws on an unknown tool, which would fail the agent.
     try {
       undo.push(removeFromToolList(ctx, toolName))
+      hiddenSections.add(`tool:${toolName}`)
     } catch (error) {
       logger?.warn?.(`dsh-tool-deny: cannot hide "${toolName}": ${error}`)
     }
   }
-  for (const sectionName of sectionNames) {
+  for (const sectionName of hiddenSections) {
     undo.push(ctx.systemPrompt.section({ name: sectionName, order: 500, text: "" }))
   }
   return undo
