@@ -30,6 +30,9 @@ jobs:
         with:
           node-version: 22
 
+      - name: Check Git install safety
+        run: node scripts/check-install-safety.mjs
+
       - name: Syntax check
         run: node --check index.js
 

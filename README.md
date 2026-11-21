@@ -20,6 +20,10 @@ Choose which tools each agent preset gets in [DeepSeek Harness](https://github.c
 
 A plugin loaded at the root of a profile registers its tools globally, so every preset inherits them. A preset can add plugins, but it has no setting to remove a global tool. dsh-tool-deny fills that gap with a few lines of YAML.
 
+## Fork maintenance
+
+After merging upstream, run `node scripts/check-install-safety.mjs` (Node.js 22) from the repository root; the committed deployment must pass before release.
+
 ## Features
 
 | Option | Where | Value | What it does |
